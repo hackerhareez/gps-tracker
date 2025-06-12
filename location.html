@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Get GPS Location</title>
+</head>
+<body>
+  <h1>Getting your location...</h1>
+  <p id="status">Waiting for permission...</p>
+
+  <script>
+    const status = document.getElementById('status');
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+          status.textContent = `Your location is:\nLatitude: ${lat}\nLongitude: ${lon}`;
+          
+          // If you want to send this to your server, do it here (example):
+          /*
+          fetch('YOUR_SERVER_URL/save-location', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({latitude: lat, longitude: lon})
+          });
+          */
+        },
+        (error) => {
+          status.textContent = 'Permission denied or location unavailable.';
+        }
+      );
+    } else {
+      status.textContent = 'Geolocation is
